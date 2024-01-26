@@ -5,5 +5,6 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import "@/authority/index";
+import "bytemd/dist/index.css";
 
 createApp(App).use(ArcoVue).use(store).use(router).mount("#app");

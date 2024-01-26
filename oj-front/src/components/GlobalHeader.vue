@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { routes } from "../router/routes";
+import { routes } from "@/router/routes";
 import { useRouter } from "vue-router";
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
@@ -68,12 +68,6 @@ const visibleRoutes = computed(() => {
     }
   });
 });
-setTimeout(() => {
-  store.dispatch("user/getLoginUser", {
-    userName: "管理员",
-    userRole: authorityEnum.ADMIN,
-  });
-}, 3000);
 </script>
 
 <style scoped>
