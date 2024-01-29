@@ -5,8 +5,8 @@ import { Editor, Viewer } from "@bytemd/vue-next";
 import { withDefaults, defineProps } from "vue";
 
 interface Props {
-  value: string;
-  handleChange: (v: string) => void;
+  mdValue: string;
+  mdHandleChange: (v: string) => void;
 }
 
 const plugins = [
@@ -16,15 +16,15 @@ const plugins = [
 ];
 
 const props = withDefaults(defineProps<Props>(), {
-  value: () => "",
-  handleChange: (v: string) => {
+  mdValue: () => "",
+  mdHandleChange: (v: string) => {
     console.log(v);
   },
 });
 </script>
 
 <template>
-  <Editor :value="value" :plugins="plugins" @change="handleChange" />
+  <Editor :value="mdValue" :plugins="plugins" @change="mdHandleChange" />
 </template>
 
 <style scoped></style>

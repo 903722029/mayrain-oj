@@ -1,17 +1,23 @@
 <template>
   <div class="home">
-    <MDEditor :value="value" :handle-change="handleChange" />
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+    {{ value }}
+    <CodeEditor code-value="codeValue" :code-handle-change="codeHandleChange" />
+    <MDEditor :md-value="mdValue" :md-handle-change="mdHandleChange" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { defineComponent, ref } from "vue";
-import HelloWorld from "@/components/HelloWorld.vue";
-import MDEditor from "@/components/MDEditor.vue"; // @ is an alias to /src
-const value = ref("");
-const handleChange = (v: string) => {
-  value.value = v;
+import MDEditor from "@/components/MDEditor.vue";
+import CodeEditor from "@/components/CodeEditor.vue"; // @ is an alias to /src
+const codeValue = ref("");
+const mdValue = ref("");
+const codeHandleChange = (v: string) => {
+  codeValue.value = v;
+  console.log(v);
+};
+const mdHandleChange = (v: string) => {
+  mdValue.value = v;
+  console.log(v);
 };
 </script>
