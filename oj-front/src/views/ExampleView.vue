@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    {{ value }}
     <CodeEditor code-value="codeValue" :code-handle-change="codeHandleChange" />
     <MDEditor :md-value="mdValue" :md-handle-change="mdHandleChange" />
   </div>

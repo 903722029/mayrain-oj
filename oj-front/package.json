@@ -11,7 +11,7 @@
     "@bytemd/plugin-gfm": "^1.21.0",
     "@bytemd/plugin-highlight": "^1.21.0",
     "@bytemd/vue-next": "^1.21.0",
-    "axios": "^1.6.2",
+    "axios": "^1.6.7",
     "core-js": "^3.8.3",
     "monaco-editor": "^0.45.0",
     "monaco-editor-webpack-plugin": "^7.1.0",
