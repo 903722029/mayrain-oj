@@ -170,6 +170,23 @@ public class QuestionController {
     }
 
     /**
+     * 分页获取列表
+     *
+     * @param questionQueryRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/list/page")
+    public BaseResponse<Page<Question>> listQuestionByPage(@RequestBody QuestionQueryRequest questionQueryRequest,
+            HttpServletRequest request) {
+        long current = questionQueryRequest.getCurrent();
+        long size = questionQueryRequest.getPageSize();
+        // 限制爬虫
+        ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
+        return ResultUtils.success(questionService.page(new Page<>(current, size),
+                questionService.getQueryWrapper(questionQueryRequest)));
+    }
+    /**
      * 分页获取列表（封装类）
      *
      * @param questionQueryRequest

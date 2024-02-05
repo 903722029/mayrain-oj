@@ -7,6 +7,7 @@ import { withDefaults, defineProps } from "vue";
 interface Props {
   mdValue: string;
   mdHandleChange: (v: string) => void;
+  mode: string;
 }
 
 const plugins = [
@@ -20,11 +21,21 @@ const props = withDefaults(defineProps<Props>(), {
   mdHandleChange: (v: string) => {
     console.log(v);
   },
+  mode: () => "split",
 });
 </script>
 
 <template>
-  <Editor :value="mdValue" :plugins="plugins" @change="mdHandleChange" />
+  <Editor
+    :value="mdValue"
+    :plugins="plugins"
+    :mode="mode"
+    @change="mdHandleChange"
+  />
 </template>
 
-<style scoped></style>
+<style>
+.bytemd-toolbar-icon.bytemd-tippy.bytemd-tippy-right:last-child {
+  display: none;
+}
+</style>
