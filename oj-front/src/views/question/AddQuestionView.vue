@@ -1,10 +1,15 @@
 <script setup lang="ts">
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import MDEditor from "@/components/MDEditor.vue";
 import { QuestionControllerService } from "../../../generated";
 import message from "@arco-design/web-vue/es/message";
+import { useRoute } from "vue-router";
+import { onMounted } from "@vue/runtime-dom";
 
-const form = reactive({
+const route = useRoute();
+const updatePage = route.path.includes("update");
+
+const form = ref({
   answer: "",
   content: "",
   tags: [],
@@ -21,33 +26,76 @@ const form = reactive({
     },
   ],
 });
+/**
+ * 根据题目 id 获取旧数据
+ */
+const loadData = async () => {
+  const id = route.query.id;
+  if (!id) {
+    return;
+  }
+  const res = await QuestionControllerService.getQuestionByIdUsingGet(
+    id as any
+  );
+  if (res.code === 0) {
+    form.value = res.data as any;
+    if (form.value.judgeCase) {
+      form.value.judgeCase = JSON.parse(form.value.judgeCase as any);
+    }
+    if (form.value.tags) {
+      form.value.tags = JSON.parse(form.value.tags as any);
+    }
+    if (form.value.judgeConfig) {
+      form.value.judgeConfig = JSON.parse(form.value.judgeConfig as any);
+    }
+  } else {
+    message.error("查询错误");
+  }
+};
 
+onMounted(() => {
+  loadData();
+});
 const handleAdd = () => {
-  form.judgeCase.push({
+  form.value.judgeCase.push({
     inputCase: "",
     outputCase: "",
   });
 };
 const handleDelete = (index: number) => {
-  form.judgeCase.splice(index, 1);
+  form.value.judgeCase.splice(index, 1);
 };
 
 const doSubmit = async () => {
-  console.log(form);
-  const res = await QuestionControllerService.addQuestionUsingPost(form);
-  if (res.code === 0) {
-    message.success("创建成功");
+  console.log(form.value);
+  // 判断更新页面or新增页面
+  if (updatePage) {
+    const res = await QuestionControllerService.updateQuestionUsingPost(
+      form.value
+    );
+    if (res.code === 0) {
+      message.success("更新成功");
+    } else {
+      message.success("更新失败");
+    }
   } else {
-    message.error("创建失败");
+    const res = await QuestionControllerService.addQuestionUsingPost(
+      form.value
+    );
+    if (res.code === 0) {
+      message.success("创建成功");
+    } else {
+      message.error("创建失败");
+    }
   }
 };
 
 const onContentChange = (content: string) => {
-  form.content = content;
+  form.value.content = content;
 };
 
 const onAnswerChange = (answer: string) => {
-  form.answer = answer;
+  form.value.answer = answer;
 };
 </script>
 

@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue";
 import { onMounted } from "@vue/runtime-dom";
-import { QuestionControllerService } from "../../../generated";
+import { Question, QuestionControllerService } from "../../../generated";
 import message from "@arco-design/web-vue/es/message";
+import { useRouter } from "vue-router";
 
 onMounted(() => {
   loadData();
@@ -26,7 +27,28 @@ const loadData = async () => {
     message.error("查询失败");
   }
 };
-
+const doDelete = async (question: Question) => {
+  console.log(question);
+  const res = await QuestionControllerService.deleteQuestionUsingPost({
+    id: question.id,
+  });
+  if (res.code === 0) {
+    message.success("删除成功");
+    await loadData();
+  } else {
+    message.error("删除失败");
+  }
+};
+const router = useRouter();
+const doUpdate = (question: Question) => {
+  console.log(question);
+  router.push({
+    path: "/update/question",
+    query: {
+      id: question.id,
+    },
+  });
+};
 const columns = [
   {
     title: "id",
@@ -80,9 +102,10 @@ const columns = [
       }"
     >
       <template #optional="{ record }">
-        <a-button @click="$modal.info({ title: 'Name', content: record.name })"
-          >view
-        </a-button>
+        <a-space>
+          <a-button status="danger" @click="doUpdate(record)">修改</a-button>
+          <a-button type="primary" @click="doDelete(record)">删除</a-button>
+        </a-space>
       </template>
     </a-table>
   </div>
