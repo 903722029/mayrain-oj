@@ -1,23 +1,26 @@
-package com.mayrain.oj.manager;
+package com.mayrain.oj;
 
-import javax.annotation.Resource;
+import com.mayrain.oj.config.WxOpenConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.annotation.Resource;
+
 /**
- * Cos 操作测试
+ * 主类测试
  *
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://yupi.icu">编程导航知识星球</a>
  */
 @SpringBootTest
-class CosManagerTest {
+class MainApplicationTests {
 
     @Resource
-    private CosManager cosManager;
+    private WxOpenConfig wxOpenConfig;
 
     @Test
-    void putObject() {
-        cosManager.putObject("test", "test.json");
+    void contextLoads() {
+        System.out.println(wxOpenConfig);
     }
+
 }
