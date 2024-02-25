@@ -1,5 +1,8 @@
 {
   "devDependencies": {
     "@arco-design/web-vue": "^2.54.3"
+  },
+  "dependencies": {
+    "moment": "^2.30.1"
   }
 }

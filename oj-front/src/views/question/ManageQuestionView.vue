@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue";
-import { onMounted } from "@vue/runtime-dom";
+import { onMounted, watchEffect } from "@vue/runtime-dom";
 import { Question, QuestionControllerService } from "../../../generated";
 import message from "@arco-design/web-vue/es/message";
 import { useRouter } from "vue-router";
@@ -8,13 +8,12 @@ import { useRouter } from "vue-router";
 onMounted(() => {
   loadData();
 });
-
+const dataList = ref([]);
+const total = ref(0);
 const searchParams = ref({
   pageSize: 10,
   current: 1,
 });
-const dataList = ref([]);
-const total = ref(0);
 const loadData = async () => {
   const res = await QuestionControllerService.listQuestionByPageUsingPost(
     searchParams.value
@@ -27,6 +26,14 @@ const loadData = async () => {
     message.error("查询失败");
   }
 };
+const onPageChange = (page: number) => {
+  searchParams.value = {
+    ...searchParams.value,
+    current: page,
+  };
+  loadData();
+};
+
 const doDelete = async (question: Question) => {
   console.log(question);
   const res = await QuestionControllerService.deleteQuestionUsingPost({
@@ -100,6 +107,7 @@ const columns = [
         total: total,
         showTotal: true,
       }"
+      @page-change="onPageChange"
     >
       <template #optional="{ record }">
         <a-space>

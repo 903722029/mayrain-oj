@@ -183,8 +183,9 @@ public class QuestionController {
         long size = questionQueryRequest.getPageSize();
         // 限制爬虫
         ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
-        return ResultUtils.success(questionService.page(new Page<>(current, size),
+        BaseResponse<Page<Question>> success = ResultUtils.success(questionService.page(new Page<>(current, size),
                 questionService.getQueryWrapper(questionQueryRequest)));
+        return success;
     }
     /**
      * 分页获取列表（封装类）
