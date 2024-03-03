@@ -3,7 +3,7 @@ package com.mayrain.oj.judge.strategy;
 import cn.hutool.json.JSONUtil;
 import com.mayrain.oj.model.dto.question.JudgeCase;
 import com.mayrain.oj.model.dto.question.JudgeConfig;
-import com.mayrain.oj.model.dto.questionsubmit.JudgeInfo;
+import com.mayrain.oj.judge.codesandbox.model.JudgeInfo;
 import com.mayrain.oj.model.entity.Question;
 import com.mayrain.oj.model.enums.JudgeInfoMessageEnum;
 

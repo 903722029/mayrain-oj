@@ -46,7 +46,7 @@ const toQuestionPage = (question: Question) => {
 const doSearch = () => {
   searchParams.value = {
     ...searchParams.value,
-    current: 0,
+    current: 1,
   };
   loadData();
 };

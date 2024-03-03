@@ -12,7 +12,7 @@ import com.mayrain.oj.judge.service.JudgeService;
 import com.mayrain.oj.judge.strategy.JudgeContext;
 import com.mayrain.oj.judge.strategy.JudgeManager;
 import com.mayrain.oj.model.dto.question.JudgeCase;
-import com.mayrain.oj.model.dto.questionsubmit.JudgeInfo;
+import com.mayrain.oj.judge.codesandbox.model.JudgeInfo;
 import com.mayrain.oj.model.entity.Question;
 import com.mayrain.oj.model.entity.QuestionSubmit;
 import com.mayrain.oj.model.enums.QuestionSubmitStatusEnum;

@@ -1,4 +1,4 @@
-package com.mayrain.oj.judge.codesandbox.model;
+package com.mayrain.ojcodesandbox.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,22 +16,17 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ExecuteCodeResponse {
+public class ExecuteCodeRequest {
     /**
-     * 输出结果
+     * 输入用例
      */
-    private List<String> outputList;
+    private List<String> inputList;
     /**
-     * 判题信息
+     * 语言
      */
-    private JudgeInfo judgeInfo;
+    private String language;
     /**
-     * 执行信息
+     * 代码
      */
-    private String message;
-    /**
-     * 执行状态
-     */
-    private Integer status;
-
+    private String code;
 }

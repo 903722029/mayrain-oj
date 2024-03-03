@@ -1,6 +1,6 @@
 package com.mayrain.oj.judge.strategy;
 
-import com.mayrain.oj.model.dto.questionsubmit.JudgeInfo;
+import com.mayrain.oj.judge.codesandbox.model.JudgeInfo;
 import com.mayrain.oj.model.entity.QuestionSubmit;
 import org.springframework.stereotype.Service;
 

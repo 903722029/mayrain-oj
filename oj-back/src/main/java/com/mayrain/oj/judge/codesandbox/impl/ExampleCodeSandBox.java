@@ -3,7 +3,7 @@ package com.mayrain.oj.judge.codesandbox.impl;
 import com.mayrain.oj.judge.codesandbox.CodeSandBox;
 import com.mayrain.oj.judge.codesandbox.model.ExecuteCodeRequest;
 import com.mayrain.oj.judge.codesandbox.model.ExecuteCodeResponse;
-import com.mayrain.oj.model.dto.questionsubmit.JudgeInfo;
+import com.mayrain.oj.judge.codesandbox.model.JudgeInfo;
 import com.mayrain.oj.model.enums.JudgeInfoMessageEnum;
 import com.mayrain.oj.model.enums.QuestionSubmitStatusEnum;
 

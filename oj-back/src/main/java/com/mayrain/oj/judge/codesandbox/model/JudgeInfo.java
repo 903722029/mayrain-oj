@@ -1,4 +1,4 @@
-package com.mayrain.oj.model.dto.questionsubmit;
+package com.mayrain.oj.judge.codesandbox.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

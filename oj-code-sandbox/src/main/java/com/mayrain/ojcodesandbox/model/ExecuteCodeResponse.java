@@ -1,4 +1,4 @@
-package com.mayrain.oj.judge.codesandbox.model;
+package com.mayrain.ojcodesandbox.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

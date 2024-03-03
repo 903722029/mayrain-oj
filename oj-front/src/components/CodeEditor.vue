@@ -1,14 +1,8 @@
 <script setup lang="ts">
 import * as monaco from "monaco-editor";
 import { Editor } from "@bytemd/vue-next";
-import { ref } from "vue";
-import {
-  onMounted,
-  toRaw,
-  withDefaults,
-  defineProps,
-  watch,
-} from "@vue/runtime-dom";
+import { ref, watch } from "vue";
+import { onMounted, toRaw, withDefaults, defineProps } from "@vue/runtime-dom";
 
 interface Props {
   codeValue: string; // 使用codeValue替代value
@@ -36,6 +30,10 @@ watch(
       // 当语言发生变化时，更新 Monaco 编辑器的模型语言
       monaco.editor.setModelLanguage(codeEditor.value.getModel(), newLanguage);
     }
+  },
+  {
+    deep: true, //监听ref包裹的深层次对象，必须加deep才能读取属性
+    immediate: true, //页面刷新就调用一次
   }
 );
 onMounted(() => {
