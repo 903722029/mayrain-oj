@@ -13,4 +13,5 @@ public class ExecuteCmdMessage {
     private String executeMessage;
     private String errorMessage;
     private Long time;
+    private Long memory;
 }
