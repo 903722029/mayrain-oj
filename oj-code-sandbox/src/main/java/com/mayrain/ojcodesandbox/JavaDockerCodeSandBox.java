@@ -23,6 +23,7 @@ import com.github.dockerjava.core.command.ExecStartResultCallback;
 import com.mayrain.ojcodesandbox.model.ExecuteCmdMessage;
 import com.mayrain.ojcodesandbox.model.ExecuteCodeRequest;
 import com.mayrain.ojcodesandbox.model.ExecuteCodeResponse;
+import org.springframework.stereotype.Component;
 
 import java.io.Closeable;
 import java.io.File;
@@ -38,6 +39,7 @@ import java.util.concurrent.TimeUnit;
  * @Date: 2024-03-02
  * @Description:
  **/
+@Component
 public class JavaDockerCodeSandBox extends JavaCodeSandBoxTemplate{
     public static final long TIME_OUT = 5000L;
     public static final Boolean FIRST_INIT = true;
