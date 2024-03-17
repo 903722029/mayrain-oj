@@ -5,17 +5,16 @@ import { ref, watch } from "vue";
 import { onMounted, toRaw, withDefaults, defineProps } from "@vue/runtime-dom";
 
 interface Props {
-  codeValue: string; // 使用codeValue替代value
-  language: string;
+  value: string;
+  language?: string;
   codeHandleChange: (v: string) => void;
 }
 
-// 使用codeValue，确保与interface一致
 const props = withDefaults(defineProps<Props>(), {
-  codeValue: "", // 使用codeValue
-  language: "java",
+  value: () => "",
+  language: () => "java",
   codeHandleChange: (v: string) => {
-    console.log();
+    console.log(v);
   },
 });
 
@@ -25,21 +24,22 @@ const codeEditor = ref();
 // 监听语言变化
 watch(
   () => props.language,
-  (newLanguage, oldLanguage) => {
-    if (codeEditor.value && newLanguage !== oldLanguage) {
+  () => {
+    console.log(props.language);
+    if (codeEditor.value) {
       // 当语言发生变化时，更新 Monaco 编辑器的模型语言
-      monaco.editor.setModelLanguage(codeEditor.value.getModel(), newLanguage);
+      monaco.editor.setModelLanguage(
+        toRaw(codeEditor.value).getModel(),
+        props.language
+      );
     }
-  },
-  {
-    deep: true, //监听ref包裹的深层次对象，必须加deep才能读取属性
-    immediate: true, //页面刷新就调用一次
   }
 );
 onMounted(() => {
   console.log(props.language);
-  debugger;
-  if (!codeEditorRef.value) return;
+  if (!codeEditorRef.value) {
+    return;
+  }
   codeEditor.value = monaco.editor.create(codeEditorRef.value, {
     value: props.codeValue, // 确保这里使用codeValue
     language: props.language,
