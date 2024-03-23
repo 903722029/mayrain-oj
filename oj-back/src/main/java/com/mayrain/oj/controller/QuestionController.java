@@ -16,12 +16,18 @@ import com.mayrain.oj.model.dto.question.QuestionAddRequest;
 import com.mayrain.oj.model.dto.question.QuestionEditRequest;
 import com.mayrain.oj.model.dto.question.QuestionQueryRequest;
 import com.mayrain.oj.model.dto.question.QuestionUpdateRequest;
+import com.mayrain.oj.model.dto.questionsubmit.QuestionSubmitAddRequest;
+import com.mayrain.oj.model.dto.questionsubmit.QuestionSubmitQueryRequest;
 import com.mayrain.oj.model.entity.Question;
+import com.mayrain.oj.model.entity.QuestionSubmit;
 import com.mayrain.oj.model.entity.User;
+import com.mayrain.oj.model.vo.QuestionSubmitVO;
 import com.mayrain.oj.model.vo.QuestionVO;
 import com.mayrain.oj.service.QuestionService;
+import com.mayrain.oj.service.QuestionSubmitService;
 import com.mayrain.oj.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,6 +54,9 @@ public class QuestionController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private QuestionSubmitService questionSubmitService;
 
     private final static Gson GSON = new Gson();
 
@@ -286,5 +295,44 @@ public class QuestionController {
         Question question = questionService.getById(id);
         ThrowUtils.throwIf(question == null, ErrorCode.NOT_FOUND_ERROR);
         return ResultUtils.success(question);
+    }
+
+    /**
+     * 题目提交
+     *
+     * @param questionSubmitAddRequest
+     * @param request
+     * @return 题目提交 id
+     */
+    @PostMapping("question_submit/do")
+    public BaseResponse<Long> doQuestionSubmit(@RequestBody QuestionSubmitAddRequest questionSubmitAddRequest,
+            HttpServletRequest request) {
+        if (questionSubmitAddRequest == null || questionSubmitAddRequest.getQuestionId() <= 0 || StringUtils.isEmpty(
+                questionSubmitAddRequest.getLanguage()) || StringUtils.isEmpty(questionSubmitAddRequest.getCode())) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        final User loginUser = userService.getLoginUser(request);
+        Long result = questionSubmitService.doQuestionSubmit(questionSubmitAddRequest, loginUser);
+        return ResultUtils.success(result);
+    }
+
+    /**
+     * 分页获取列表（非管理员无法看到代码）
+     *
+     * @param questionSubmitQueryRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/question_submit/list/page/vo")
+    public BaseResponse<Page<QuestionSubmitVO>> listQuestionSubmitVOByPage(@RequestBody QuestionSubmitQueryRequest questionSubmitQueryRequest,
+            HttpServletRequest request) {
+        long current = questionSubmitQueryRequest.getCurrent();
+        long size = questionSubmitQueryRequest.getPageSize();
+        // 限制爬虫
+        ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
+        Page<QuestionSubmit> questionSubmitPage = questionSubmitService.page(new Page<>(current, size),
+                questionSubmitService.getQueryWrapper(questionSubmitQueryRequest));
+        User loginUser = userService.getLoginUser(request);
+        return ResultUtils.success(questionSubmitService.getQuestionSubmitVOPage(questionSubmitPage, loginUser));
     }
 }

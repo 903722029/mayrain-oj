@@ -123,6 +123,7 @@ public abstract class JavaCodeSandBoxTemplate implements CodeSandBox {
         executeCodeResponse.setOutputList(outputList);
         JudgeInfo judgeInfo = new JudgeInfo();
         judgeInfo.setTime(maxTime);
+        judgeInfo.setMemory(0L); // TODO 原生实现难以获取运行内存
         executeCodeResponse.setJudgeInfo(judgeInfo);
         return executeCodeResponse;
     }

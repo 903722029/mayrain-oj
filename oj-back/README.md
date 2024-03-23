@@ -163,3 +163,8 @@ PUT post_v1
 // todo 取消注释开启任务
 //@Component
 ```
+
+### 生成代码命令
+```shell
+npx openapi --input http://localhost:8101/api/v2/api-docs --output ./generated --client axios
+```
